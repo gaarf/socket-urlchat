@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- head %>
+        <title><%= room %></title>
+    </head>
+    <body class="room">
+
+        <noscript>
+          This page requires Javascript
+        </noscript>
+
+        <main>
+            <h1>room: <code><%= room %></code></h1>
+
+            <ul class="roster"></ul>
+
+            <ol class="conversation"></ol>
+
+            <form class="compose">
+              <input type="text" />
+              <button type="submit">&raquo;</button>
+            </form>
+
+        </main>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            window.URLCHAT = {
+                room: "<%= room %>"
+            };
+        </script>
+        <script src="/public/client.js"></script>
+    </body>
+</html>
