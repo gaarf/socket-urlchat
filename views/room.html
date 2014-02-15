@@ -11,14 +11,14 @@
         </noscript>
 
         <main>
-            <h1>room: <code><%= room %></code></h1>
+            <h1><code><%= room %></code></h1>
 
             <ul class="roster"></ul>
 
-            <ol class="conversation"></ol>
+            <ol class="empty conversation"></ol>
 
             <form class="compose">
-              <input type="text" />
+              <input type="text" placeholder="message or /help" />
               <button type="submit">&raquo;</button>
             </form>
 
