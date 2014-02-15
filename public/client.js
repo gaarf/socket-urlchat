@@ -4,14 +4,17 @@ jQuery(function(){
 
   socket.on('connect', function () { 
 
-    console.log('connected, emitting hello...', socket);
-    socket.emit('hello', { room: URLCHAT.room, ua: navigator.userAgent });
+    console.log('connected, emitting hello...');
+    socket.emit('hello', { 
+      room: location.pathname.replace(/^\/room/, '')
+    , ua: navigator.userAgent
+    });
 
   });
 
 
-  socket.on('message', function (message) { 
-    console.log('message', message);
+  socket.on('tick', function (data) { 
+    $('#stats').text(JSON.stringify(data));
   });
 
 
@@ -19,9 +22,12 @@ jQuery(function(){
     console.log('roster', roster);
   });
 
+  socket.on('slash', function () { 
+    console.log('slash', arguments);
+  });
 
-  socket.on('convo', function (convo) { 
-    console.log('convo', convo);
+  socket.on('conversation', function () { 
+    console.log('conversation', arguments);
   });
 
 });

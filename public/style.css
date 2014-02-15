@@ -16,3 +16,9 @@ body.home {
 body.room {
   
 }
+
+#stats {
+  background-color: yellow;
+  position: absolute;
+  bottom:0; right:0;
+}
