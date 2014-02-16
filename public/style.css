@@ -84,6 +84,24 @@ div.flash.oops {
 #stats {
   background-color: yellow;
   position: absolute;
-  bottom:0; right:0;
+  bottom:0; right:10px;
+  border-radius: 4px;
+}
+
+#stats > * {
+  margin: 10px;
+}
+
+#stats ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+#stats li:before {
+  content: attr(data-rostersize) " users in ";
+}
+
+#stats li:after {
+  content: " (" attr(data-buffersize) " messages)";
 }
 

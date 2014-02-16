@@ -13,8 +13,30 @@ jQuery(function(){
   });
 
 
+
   socket.on('tick', function (data) { 
-    $('#stats').text(JSON.stringify(data));
+    var totalUsers = 0
+      , listMarkup = (function b(root, leaf) {
+          var html = '';
+          $.each(leaf, function(key) {
+            var p = root + ( key==='_' ? '' : '/'+key );
+            if(this instanceof Array) {
+              totalUsers += this[0];
+              html += '<li data-rostersize="'+this[0]+'" data-buffersize="'+this[1]+'">'
+              html += '<a href="/room' + p + '">' + p +'</a></li>';
+            }
+            else {
+              html += b(p, this);
+            }
+          });
+          return html; 
+        })('', data.tree);
+    $('#stats')
+      .empty()
+      .append(
+        '<p>'+ totalUsers +' users in '+ data.roomCount +' rooms</p>',
+        '<ul>'+ listMarkup +'</ul>'
+      );
   });
 
 
@@ -75,6 +97,7 @@ jQuery(function(){
           location.assign('/room/'+valParts[1]);
           break;
         }
+        // intentional fall-through
 
       default:
         socket.emit('speech', val);
