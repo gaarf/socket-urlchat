@@ -3,13 +3,13 @@ jQuery(function(){
   var socket = io.connect('http://localhost/chat');
 
   socket.on('connect', function () { 
-
     console.log('connected, emitting hello...');
+    var n = document.cookie.match(/name=(\w+)/);
     socket.emit('hello', { 
       room: location.pathname.replace(/^\/room/, '')
     , ua: navigator.userAgent
+    , name: n && n[1]
     });
-
   });
 
 
@@ -78,11 +78,20 @@ jQuery(function(){
     appendMessage.call(conversation);
   });
 
-  socket.on('slash', function (msg, cls) { 
-    var $help = $('<div>').html(msg).addClass('flash '+cls);
-    $help.insertAfter($compose);
-    setTimeout(function(){ $help.fadeOut(); }, 5000);
+
+  socket.on('name-update', function (name) { 
+    document.cookie = 'name='+name;
+    flash('you are now named <em>'+name+'</em>');
   });
+
+
+  function flash(msg, cls) { 
+    var $flash = $('<div>').html(msg).addClass('flash '+cls);
+    $flash.insertAfter($compose);
+    setTimeout(function(){ $flash.fadeOut(); }, 5000);
+  }
+
+  socket.on('slash', flash);
 
 
   $compose.submit(function(e){

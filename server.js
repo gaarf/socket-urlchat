@@ -22,7 +22,7 @@ app.use('/public', express.static('./public'));
 // app.use(express.urlencoded());
 // app.use(express.json());
 
-// app.use(express.cookieParser());
+app.use(express.cookieParser());
 // app.use(express.cookieSession({secret:'tops3cr3t'}));
 // app.use(express.csrf());
 
